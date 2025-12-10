@@ -1,79 +1,66 @@
-//
-//  PageModel.swift
-//  tickethamsterV3
-//
-//  Created by Eduardo Jimenez on 21/10/24.
-//
-
 import Foundation
 
 struct Page: Identifiable, Equatable {
     
     let id = UUID()
     
-    // MARK: - Campos visibles en el ticket
+    // MARK: - Campos del ticket
+    var tx1: String   // Type
+    var tx2: String   // Header "SEC ROW SEAT" o similar
+    var tx3: String   // Sec
+    var tx4: String   // Row
+    var tx5: String   // Seat
+    var tx6: String   // Name
+    var tx7: String   // Date
+    var tx8: String   // "Mobile Entry"
+    var tx9: String   // "View in Wallet"
     
-    /// Type (viene de Firestore: "Type")
-    var tx1: String
-    
-    /// Texto de header de la línea de asientos (puede ser "SEC     ROW     SEAT" o "General Admission")
-    var tx2: String
-    
-    /// Sec (viene de Firestore: "Sec")
-    var tx3: String
-    
-    /// Row (viene de Firestore: "Row")
-    var tx4: String
-    
-    /// Seat (viene de Firestore: "Seat")
-    var tx5: String
-    
-    /// Nombre del evento (viene de Firestore: "Name")
-    var tx6: String
-    
-    /// Fecha / info del evento (viene de Firestore: "Date")
-    var tx7: String
-    
-    /// Texto fijo: "Mobile Entry"
-    var tx8: String
-    
-    /// Texto fijo: "View in Wallet"
-    var tx9: String
-    
-    /// Imagen del ticket (viene de Firestore: "TicketIMG" como URL)
+    /// URL de la imagen del ticket (TicketIMG)
     var imageUrl: String
     
-    /// Índice/tag para el TabView
+    /// URL del código de barras (Barcode)
+    var barcodeUrl: String
+    
+    /// URL del fondo safe (SafeIMG)
+    var safeUrl: String
+    
+    /// Texto de acceso, viene de Firestore: "Acceso"
+    var acceso: String
+    
+    /// Índice/tag para TabView
     var tag: Int
     
-    // MARK: - Init conveniente para datos que vienen de Firebase
-    
-    /// Inicializador pensado para construir un Page desde los campos de Firestore
+    // MARK: - Init desde Firebase
     init(type: String,
          sec: String,
          row: String,
          seat: String,
          name: String,
          date: String,
-         ticketIMG: String,
+         imageUrl: String,
+         barcodeUrl: String,
+         safeUrl: String,
+         acceso: String,
          tag: Int,
-         headerText: String = "") {
+         headerText: String = "SEC     ROW     SEAT") {
         
-        self.tx1 = type                // Type
-        self.tx2 = headerText          // "SEC     ROW     SEAT" o "General Admission"
-        self.tx3 = sec                 // Sec
-        self.tx4 = row                 // Row
-        self.tx5 = seat                // Seat
-        self.tx6 = name                // Name
-        self.tx7 = date                // Date
-        self.tx8 = "Mobile Entry"      // fijo
-        self.tx9 = "View in Wallet"    // fijo
-        self.imageUrl = ticketIMG      // URL de la imagen
+        self.tx1 = type
+        self.tx2 = headerText
+        self.tx3 = sec
+        self.tx4 = row
+        self.tx5 = seat
+        self.tx6 = name
+        self.tx7 = date
+        self.tx8 = "Mobile Entry"
+        self.tx9 = "View in Wallet"
+        self.imageUrl = imageUrl
+        self.barcodeUrl = barcodeUrl
+        self.safeUrl = safeUrl
+        self.acceso = acceso
         self.tag = tag
     }
     
-    // MARK: - Inits originales para sample data (para que nada se rompa)
-    
+    // MARK: - Init manual / sample (por si usas samplePages)
     init(tx1: String,
          tx2: String,
          tx3: String,
@@ -84,6 +71,9 @@ struct Page: Identifiable, Equatable {
          tx8: String,
          tx9: String,
          imageUrl: String,
+         barcodeUrl: String,
+         safeUrl: String,
+         acceso: String,
          tag: Int) {
         
         self.tx1 = tx1
@@ -96,50 +86,61 @@ struct Page: Identifiable, Equatable {
         self.tx8 = tx8
         self.tx9 = tx9
         self.imageUrl = imageUrl
+        self.barcodeUrl = barcodeUrl
+        self.safeUrl = safeUrl
+        self.acceso = acceso
         self.tag = tag
     }
     
-    // MARK: - Datos de ejemplo
-    
+    // MARK: - Sample data
     static var samplePage = Page(
         tx1: "Boleto Normal",
-        tx2: "",
-        tx3: "Seccion",
-        tx4: "Fila",
-        tx5: "Asiento",
-        tx6: "Nombre",
-        tx7: "Fecha • Estadio GNP Seguros",
+        tx2: "SEC     ROW     SEAT",
+        tx3: "GNP-09",
+        tx4: "32",
+        tx5: "8",
+        tx6: "BAD BUNNY - DeBÍ TiRAR MáS FOToS WORLD TOUR",
+        tx7: "Wed 10 Dic 2025 • Estadio GNP Seguros",
         tx8: "Mobile Entry",
         tx9: "View in Wallet",
         imageUrl: "ticket",
+        barcodeUrl: "",
+        safeUrl: "safe",
+        acceso: "ACCESO B",   // 👈 ejemplo
         tag: 0
     )
     
     static var samplePages: [Page] = [
         Page(
             tx1: "Boleto Normal",
-            tx2: "",
-            tx3: "Seccion",
-            tx4: "Fila",
-            tx5: "Asiento",
-            tx6: "Nombre",
-            tx7: "Fecha • Estadio GNP Seguros",
+            tx2: "SEC     ROW     SEAT",
+            tx3: "GNP-09",
+            tx4: "32",
+            tx5: "8",
+            tx6: "BAD BUNNY - DeBÍ TiRAR MáS FOToS WORLD TOUR",
+            tx7: "Wed 10 Dic 2025 • Estadio GNP Seguros",
             tx8: "Mobile Entry",
             tx9: "View in Wallet",
             imageUrl: "ticket",
+            barcodeUrl: "",
+            safeUrl: "safe",
+            acceso: "ACCESO B",
             tag: 0
         ),
         Page(
             tx1: "Boleto Normal",
-            tx2: "",
-            tx3: "Seccion",
-            tx4: "Fila",
-            tx5: "Asiento",
-            tx6: "Nombre",
-            tx7: "Fecha • Estadio GNP Seguros",
+            tx2: "General Admission",
+            tx3: "GNP-09",
+            tx4: "32",
+            tx5: "9",
+            tx6: "BAD BUNNY - DeBÍ TiRAR MáS FOToS WORLD TOUR",
+            tx7: "Wed 10 Dic 2025 • Estadio GNP Seguros",
             tx8: "Mobile Entry",
             tx9: "View in Wallet",
             imageUrl: "ticket",
+            barcodeUrl: "",
+            safeUrl: "safe",
+            acceso: "ACCESO C",
             tag: 1
         ),
     ]

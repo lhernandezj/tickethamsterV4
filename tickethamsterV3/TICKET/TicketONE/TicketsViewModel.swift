@@ -1,3 +1,8 @@
+//
+//  TicketsViewModel.swift
+//  tickethamsterV3
+//
+
 import Foundation
 import FirebaseFirestore
 
@@ -16,7 +21,7 @@ class TicketsViewModel: ObservableObject {
         print("🔥 listenToTickets() llamado")
         
         listener = db.collection("Event")
-            .document("Ticket")   // 👈 AQUÍ: Event / Ticket (NO subcolección)
+            .document("Ticket")   // Colección: Event, Documento: Ticket
             .addSnapshotListener { [weak self] snapshot, error in
                 
                 guard let self = self else { return }
@@ -44,6 +49,9 @@ class TicketsViewModel: ObservableObject {
                 let name      = data["Name"]      as? String ?? ""
                 let date      = data["Date"]      as? String ?? ""
                 let ticketIMG = data["TicketIMG"] as? String ?? ""
+                let barcode   = data["Barcode"]   as? String ?? ""
+                let safeIMG   = data["SafeIMG"]   as? String ?? ""
+                let acceso    = data["Acceso"]    as? String ?? ""
                 
                 let page = Page(
                     type: type,
@@ -52,13 +60,16 @@ class TicketsViewModel: ObservableObject {
                     seat: seat,
                     name: name,
                     date: date,
-                    ticketIMG: ticketIMG,
+                    imageUrl: ticketIMG,
+                    barcodeUrl: barcode,
+                    safeUrl: safeIMG,
+                    acceso: acceso,
                     tag: 0,
                     headerText: "SEC     ROW     SEAT"
                 )
                 
                 DispatchQueue.main.async {
-                    self.pages = [page]   // 👈 un solo ticket → un solo Page
+                    self.pages = [page]
                     print("✅ pages actualizado, count = \(self.pages.count)")
                 }
             }
