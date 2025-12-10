@@ -26,6 +26,7 @@
 		90542B792CC7052100F90F85 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90542B782CC7052100F90F85 /* CodeView.swift */; };
 		90542B7B2CC7069E00F90F85 /* CodeViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90542B7A2CC7069E00F90F85 /* CodeViewer.swift */; };
 		90542B7D2CC7102F00F90F85 /* ErrorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90542B7C2CC7102F00F90F85 /* ErrorEvent.swift */; };
+		90C3B9C22EEA1C7F002CF37D /* TicketsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C3B9C12EEA1C78002CF37D /* TicketsViewModel.swift */; };
 		90C3C9A92CC2C93A00B7CF41 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C3C9A82CC2C93A00B7CF41 /* Error.swift */; };
 		90C862262D692DB40038660A /* PageModelTWO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C862252D692DB40038660A /* PageModelTWO.swift */; };
 		90C862282D692E320038660A /* PageViewTWO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C862272D692E320038660A /* PageViewTWO.swift */; };
@@ -85,6 +86,7 @@
 		90542B782CC7052100F90F85 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
 		90542B7A2CC7069E00F90F85 /* CodeViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeViewer.swift; sourceTree = "<group>"; };
 		90542B7C2CC7102F00F90F85 /* ErrorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorEvent.swift; sourceTree = "<group>"; };
+		90C3B9C12EEA1C78002CF37D /* TicketsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketsViewModel.swift; sourceTree = "<group>"; };
 		90C3C9A82CC2C93A00B7CF41 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		90C862252D692DB40038660A /* PageModelTWO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageModelTWO.swift; sourceTree = "<group>"; };
 		90C862272D692E320038660A /* PageViewTWO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewTWO.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 		90C8621F2D692B370038660A /* TicketONE */ = {
 			isa = PBXGroup;
 			children = (
+				90C3B9C12EEA1C78002CF37D /* TicketsViewModel.swift */,
 				904541212CC6DAB400858EF2 /* PageModel.swift */,
 				904541232CC6DB4E00858EF2 /* PageView.swift */,
 				904541282CC6DF4900858EF2 /* TicketsView.swift */,
@@ -477,6 +480,7 @@
 				E31CACF12CC1AE9E0089CA1E /* Account.swift in Sources */,
 				902B4CBB2EE9EC0E0031547A /* EventsModel.swift in Sources */,
 				E31CACF42CC1B5520089CA1E /* DiscoverModel.swift in Sources */,
+				90C3B9C22EEA1C7F002CF37D /* TicketsViewModel.swift in Sources */,
 				902B4CBD2EE9ED3E0031547A /* EventsView.swift in Sources */,
 				90C862262D692DB40038660A /* PageModelTWO.swift in Sources */,
 				E3FF6C292CC1B81500AD19D1 /* DiscoverView.swift in Sources */,
