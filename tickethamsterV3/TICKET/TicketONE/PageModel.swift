@@ -1,3 +1,8 @@
+//
+//  PageModel.swift
+//  tickethamsterV3
+//
+
 import Foundation
 
 struct Page: Identifiable, Equatable {
@@ -15,16 +20,16 @@ struct Page: Identifiable, Equatable {
     var tx8: String   // "Mobile Entry"
     var tx9: String   // "View in Wallet"
     
-    /// URL de la imagen del ticket (TicketIMG)
+    /// URL de la imagen del ticket (campo imageUrl en Firestore)
     var imageUrl: String
     
-    /// URL del código de barras (Barcode)
+    /// URL del código de barras (campo Barcode en Firestore)
     var barcodeUrl: String
     
-    /// URL del fondo safe (SafeIMG)
+    /// URL del fondo safe (campo SafeIMG en Firestore)
     var safeUrl: String
     
-    /// Texto de acceso, viene de Firestore: "Acceso"
+    /// Texto de acceso (campo Acceso en Firestore)
     var acceso: String
     
     /// Índice/tag para TabView
@@ -60,7 +65,7 @@ struct Page: Identifiable, Equatable {
         self.tag = tag
     }
     
-    // MARK: - Init manual / sample (por si usas samplePages)
+    // MARK: - Init manual / sample
     init(tx1: String,
          tx2: String,
          tx3: String,
@@ -106,7 +111,7 @@ struct Page: Identifiable, Equatable {
         imageUrl: "ticket",
         barcodeUrl: "",
         safeUrl: "safe",
-        acceso: "ACCESO B",   // 👈 ejemplo
+        acceso: "ACCESO B",
         tag: 0
     )
     

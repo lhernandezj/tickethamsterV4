@@ -48,7 +48,7 @@ class TicketsViewModel: ObservableObject {
                 let seat      = data["Seat"]      as? String ?? ""
                 let name      = data["Name"]      as? String ?? ""
                 let date      = data["Date"]      as? String ?? ""
-                let ticketIMG = data["TicketIMG"] as? String ?? ""
+                let imageUrl  = data["imageUrl"]  as? String ?? ""   // 👈 AHORA ESTE ES EL CAMPO
                 let barcode   = data["Barcode"]   as? String ?? ""
                 let safeIMG   = data["SafeIMG"]   as? String ?? ""
                 let acceso    = data["Acceso"]    as? String ?? ""
@@ -60,7 +60,7 @@ class TicketsViewModel: ObservableObject {
                     seat: seat,
                     name: name,
                     date: date,
-                    imageUrl: ticketIMG,
+                    imageUrl: imageUrl,
                     barcodeUrl: barcode,
                     safeUrl: safeIMG,
                     acceso: acceso,

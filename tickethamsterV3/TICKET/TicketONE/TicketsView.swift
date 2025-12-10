@@ -2,25 +2,26 @@
 //  TicketsView.swift
 //  tickethamsterV3
 //
-//  Created by Eduardo Jimenez on 21/10/24.
-//
 
 import SwiftUI
 
 struct TicketsView: View {
     
+    //ESTO CIERRA EL MODAL
     @Environment(\.presentationMode) var presentationMode
     
     @State var modal3 = false
+    
     @State private var pageIndex = 0
     private let dotAppearance = UIPageControl.appearance()
     
+    // 🔥 ViewModel que jala el doc Event/Ticket
     @StateObject private var ticketsVM = TicketsViewModel()
     
     var body: some View {
         
-        ZStack{
-            ZStack{
+        ZStack {
+            ZStack {
                 if ticketsVM.isLoading {
                     VStack {
                         Spacer()
@@ -38,7 +39,7 @@ struct TicketsView: View {
                     TabView(selection: $pageIndex) {
                         ForEach(ticketsVM.pages) { page in
                             
-                            VStack{
+                            VStack {
                                 Spacer()
                                 PageView(page: page)
                                     .padding(.bottom, 30)
@@ -49,7 +50,7 @@ struct TicketsView: View {
                     .animation(.easeInOut, value: pageIndex)
                     .tabViewStyle(.page)
                     .indexViewStyle(.page(backgroundDisplayMode: .interactive))
-                    .onAppear(){
+                    .onAppear {
                         dotAppearance.currentPageIndicatorTintColor = .gray
                         dotAppearance.pageIndicatorTintColor = UIColor.gray.withAlphaComponent(0.2)
                     }
@@ -57,14 +58,14 @@ struct TicketsView: View {
             }
             .padding(.bottom, 120)
             
-            Button("Transfer"){
+            Button("Transfer") {
                 modal3.toggle()
             }
-            .fullScreenCover(isPresented: $modal3){
+            .fullScreenCover(isPresented: $modal3) {
                 Error()
             }
             .font(.custom("Lexend", size: 16).bold())
-            .foregroundColor(Color.white)
+            .foregroundColor(.white)
             .padding(25)
             .frame(height: 45)
             .frame(width: 365)
@@ -72,21 +73,24 @@ struct TicketsView: View {
             .cornerRadius(2)
             .hoverEffect()
             .padding(.top, 720)
+                
         }
+        //STARTS HEAD
         .overlay {
-            ZStack{
-                Button(action: {presentationMode.wrappedValue.dismiss()}){
+            ZStack {
+                //ESTE BOTON CIERRA EL MODAL
+                Button(action: { presentationMode.wrappedValue.dismiss() }) {
                     Color("nHead")
                         .frame(width: 500, height: 105)
                         .background(.ultraThinMaterial)
                         .blur(radius: 0.5)
                         .edgesIgnoringSafeArea(.top)
                 }
-                .frame(maxHeight: .infinity,alignment: .top)
+                .frame(maxHeight: .infinity, alignment: .top)
                 
-                ZStack{
+                ZStack {
                     Image(systemName: "multiply")
-                        .foregroundColor(Color.white)
+                        .foregroundColor(.white)
                         .font(.system(size: 20))
                         .padding(.trailing, 350)
                     
@@ -94,12 +98,13 @@ struct TicketsView: View {
                         .fontWeight(.medium)
                         .bold()
                         .font(.custom("Lexend", size: 18))
-                        .foregroundColor(Color.white)
+                        .foregroundColor(.white)
                 }
-                .frame(maxHeight: .infinity,alignment: .top)
+                .frame(maxHeight: .infinity, alignment: .top)
             }
         }
-        .frame(maxHeight: .infinity,alignment: .top)
+        .frame(maxHeight: .infinity, alignment: .top)
+        //ENDS HEAD
     }
 }
 

@@ -2,8 +2,6 @@
 //  PageView.swift
 //  tickethamsterV3
 //
-//  Created by Eduardo Jimenez on 21/10/24.
-//
 
 import SwiftUI
 
@@ -21,70 +19,71 @@ struct PageView: View {
     //ESTO CIERRA EL MODAL
     @Environment(\.presentationMode) var presentationMode
     
-    var page : Page
+    let page: Page
     
     var body: some View {
-        ZStack(){
-            // 🔹 Fondo del ticket (si ya lo cambiaste a AsyncImage, usa esa versión)
-            Image("\(page.imageUrl)")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 380, height: 651)
+        ZStack {
+            // 🔥 Imagen del ticket desde imageUrl (URL remota o fallback local)
+            ticketBackground
             
+            // TYPE
             Text(page.tx1)
                 .font(.system(size: 15))
                 .padding(.bottom, 580)
-                .foregroundColor(Color.white)
+                .foregroundColor(.white)
             
             Text("SEC                       ROW                      SEAT")
                 .font(.system(size: 14))
                 .padding(.bottom, 500)
-                .foregroundColor(Color.white)
+                .foregroundColor(.white)
             
+            // SEC
             Text(page.tx3).bold()
                 .font(.system(size: 22))
                 .padding(.bottom, 415)
                 .padding(.trailing, 240)
-                .foregroundColor(Color.white)
+                .foregroundColor(.white)
             
+            // ROW
             Text(page.tx4).bold()
                 .font(.system(size: 22))
                 .padding(.bottom, 415)
-                .foregroundColor(Color.white)
+                .foregroundColor(.white)
             
+            // SEAT
             Text(page.tx5).bold()
                 .font(.system(size: 22))
                 .padding(.bottom, 415)
                 .padding(.leading, 240)
-                .foregroundColor(Color.white)
+                .foregroundColor(.white)
             
-            //EVENT NAME
+            // EVENT NAME
             Text(page.tx6)
                 .font(.system(size: 20))
                 .multilineTextAlignment(.center)
-                .foregroundColor(Color.white)
+                .foregroundColor(.white)
                 .padding(.bottom, 20)
             
-            //EVENT DATE
+            // EVENT DATE
             Text(page.tx7)
                 .font(.system(size: 12))
                 .padding(.top, 60)
-                .foregroundColor(Color.white)
+                .foregroundColor(.white)
             
             Text(page.tx8)
-                .foregroundColor(Color.black)
+                .foregroundColor(.black)
                 .font(.system(size: 15))
                 .padding(.top, 200)
             
-            //BUTTON TO CODE
+            // BUTTON TO CODE
             Button(action: { modal.toggle() }) {
-                ZStack{
+                ZStack {
                     Rectangle()
                         .frame(width: 325, height: 50)
                         .foregroundColor(Color("nHead"))
                         .cornerRadius(1.0)
                     
-                    HStack{
+                    HStack {
                         Image("scan")
                             .resizable()
                             .scaledToFit()
@@ -93,18 +92,17 @@ struct PageView: View {
                         Text("View Ticket")
                             .font(.system(size: 15))
                     }
-                    .foregroundColor(Color.white)
+                    .foregroundColor(.white)
                 }
             }
-            .fullScreenCover(isPresented: $modal){
-                // 👇 AQUÍ EL CAMBIO IMPORTANTE
+            .fullScreenCover(isPresented: $modal) {
                 CodeViewer(pages: [page])
             }
             .padding(.top, 350)
 
-            HStack{
+            HStack {
                 //BUTTON TO DETAILS
-                Button(action: {modal2.toggle()}) {
+                Button(action: { modal2.toggle() }) {
                     Text("Ticket Details")
                         .fontWeight(.medium)
                         .foregroundColor(Color("blueticket"))
@@ -112,13 +110,48 @@ struct PageView: View {
                         .padding(13)
                         .cornerRadius(4)
                 }
-                .fullScreenCover(isPresented: $modal2){
+                .fullScreenCover(isPresented: $modal2) {
                     Details()
                 }
                 
             }
             .padding(.top, 510)
-            
+        }
+    }
+    
+    // MARK: - Fondo del ticket usando imageUrl
+    private var ticketBackground: some View {
+        Group {
+            if let url = URL(string: page.imageUrl), !page.imageUrl.isEmpty {
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .empty:
+                        ProgressView()
+                            .frame(width: 380, height: 651)
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 380, height: 651)
+                    case .failure:
+                        Image("ticket") // fallback local
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 380, height: 651)
+                    @unknown default:
+                        Image("ticket")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 380, height: 651)
+                    }
+                }
+            } else {
+                // Si no hay URL, usa asset local
+                Image("ticket")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 380, height: 651)
+            }
         }
     }
 }
