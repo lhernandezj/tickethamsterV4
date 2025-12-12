@@ -2,6 +2,8 @@
 //  PageModel.swift
 //  tickethamsterV3
 //
+//  Created by Eduardo Jimenez on 21/10/24.
+//
 
 import Foundation
 
@@ -9,30 +11,34 @@ struct Page: Identifiable, Equatable {
     
     let id = UUID()
     
-    // MARK: - Campos del ticket
+    // MARK: - Campos del ticket (UI existente)
     var tx1: String   // Type
-    var tx2: String   // Header "SEC ROW SEAT" o similar
+    var tx2: String   // Header "SEC ROW SEAT"
     var tx3: String   // Sec
     var tx4: String   // Row
     var tx5: String   // Seat
     var tx6: String   // Name
     var tx7: String   // Date
-    var tx8: String   // "Mobile Entry"
-    var tx9: String   // "View in Wallet"
+    var tx8: String   // fijo "Mobile Entry"
+    var tx9: String   // fijo "View in Wallet"
     
-    /// URL de la imagen del ticket (campo imageUrl en Firestore)
-    var imageUrl: String
+    // MARK: - Imágenes / URLs
+    var imageUrl: String     // Firestore: imageUrl
+    var barcodeUrl: String   // Firestore: Barcode (URL de imagen)
+    var safeUrl: String      // Firestore: SafeIMG (URL de imagen)
     
-    /// URL del código de barras (campo Barcode en Firestore)
-    var barcodeUrl: String
+    // MARK: - CodeView
+    var acceso: String       // Firestore: Acceso
     
-    /// URL del fondo safe (campo SafeIMG en Firestore)
-    var safeUrl: String
+    // MARK: - Details (campos nuevos)
+    var seatDetail: String       // Firestore: SeatDetail
+    var barcodeNumber: String    // Firestore: BarcodeNumber
+    var place: String            // Firestore: Place
+    var city: String             // Firestore: City
+    var purchase: String         // Firestore: Purchase
+    var price: String            // Firestore: Price
     
-    /// Texto de acceso (campo Acceso en Firestore)
-    var acceso: String
-    
-    /// Índice/tag para TabView
+    // MARK: - TabView
     var tag: Int
     
     // MARK: - Init desde Firebase
@@ -46,6 +52,12 @@ struct Page: Identifiable, Equatable {
          barcodeUrl: String,
          safeUrl: String,
          acceso: String,
+         seatDetail: String,
+         barcodeNumber: String,
+         place: String,
+         city: String,
+         purchase: String,
+         price: String,
          tag: Int,
          headerText: String = "SEC     ROW     SEAT") {
         
@@ -58,95 +70,45 @@ struct Page: Identifiable, Equatable {
         self.tx7 = date
         self.tx8 = "Mobile Entry"
         self.tx9 = "View in Wallet"
-        self.imageUrl = imageUrl
-        self.barcodeUrl = barcodeUrl
-        self.safeUrl = safeUrl
-        self.acceso = acceso
-        self.tag = tag
-    }
-    
-    // MARK: - Init manual / sample
-    init(tx1: String,
-         tx2: String,
-         tx3: String,
-         tx4: String,
-         tx5: String,
-         tx6: String,
-         tx7: String,
-         tx8: String,
-         tx9: String,
-         imageUrl: String,
-         barcodeUrl: String,
-         safeUrl: String,
-         acceso: String,
-         tag: Int) {
         
-        self.tx1 = tx1
-        self.tx2 = tx2
-        self.tx3 = tx3
-        self.tx4 = tx4
-        self.tx5 = tx5
-        self.tx6 = tx6
-        self.tx7 = tx7
-        self.tx8 = tx8
-        self.tx9 = tx9
         self.imageUrl = imageUrl
         self.barcodeUrl = barcodeUrl
         self.safeUrl = safeUrl
+        
         self.acceso = acceso
+        
+        self.seatDetail = seatDetail
+        self.barcodeNumber = barcodeNumber
+        self.place = place
+        self.city = city
+        self.purchase = purchase
+        self.price = price
+        
         self.tag = tag
     }
     
-    // MARK: - Sample data
+    // MARK: - Sample (para previews)
     static var samplePage = Page(
-        tx1: "Boleto Normal",
-        tx2: "SEC     ROW     SEAT",
-        tx3: "GNP-09",
-        tx4: "32",
-        tx5: "8",
-        tx6: "BAD BUNNY - DeBÍ TiRAR MáS FOToS WORLD TOUR",
-        tx7: "Wed 10 Dic 2025 • Estadio GNP Seguros",
-        tx8: "Mobile Entry",
-        tx9: "View in Wallet",
-        imageUrl: "ticket",
-        barcodeUrl: "",
-        safeUrl: "safe",
+        type: "Boleto Normal",
+        sec: "GNP-09",
+        row: "32",
+        seat: "8",
+        name: "BAD BUNNY - DeBÍ TiRAR MáS FOToS WORLD TOUR",
+        date: "Wed 10 Dic 2025 • 9:00 PM",
+        imageUrl: "https://example.com/ticket.png",
+        barcodeUrl: "https://example.com/barcode.png",
+        safeUrl: "https://example.com/safe.png",
         acceso: "ACCESO B",
+        seatDetail: "GNP-09 / 32 / 8",
+        barcodeNumber: "323322837072082138c",
+        place: "Estadio GNP Seguros",
+        city: "Ciudad de México DF MX",
+        purchase: "Mon, May 5 2025",
+        price: "$4741.00",
         tag: 0
     )
     
     static var samplePages: [Page] = [
-        Page(
-            tx1: "Boleto Normal",
-            tx2: "SEC     ROW     SEAT",
-            tx3: "GNP-09",
-            tx4: "32",
-            tx5: "8",
-            tx6: "BAD BUNNY - DeBÍ TiRAR MáS FOToS WORLD TOUR",
-            tx7: "Wed 10 Dic 2025 • Estadio GNP Seguros",
-            tx8: "Mobile Entry",
-            tx9: "View in Wallet",
-            imageUrl: "ticket",
-            barcodeUrl: "",
-            safeUrl: "safe",
-            acceso: "ACCESO B",
-            tag: 0
-        ),
-        Page(
-            tx1: "Boleto Normal",
-            tx2: "General Admission",
-            tx3: "GNP-09",
-            tx4: "32",
-            tx5: "9",
-            tx6: "BAD BUNNY - DeBÍ TiRAR MáS FOToS WORLD TOUR",
-            tx7: "Wed 10 Dic 2025 • Estadio GNP Seguros",
-            tx8: "Mobile Entry",
-            tx9: "View in Wallet",
-            imageUrl: "ticket",
-            barcodeUrl: "",
-            safeUrl: "safe",
-            acceso: "ACCESO C",
-            tag: 1
-        ),
+        samplePage
     ]
 }

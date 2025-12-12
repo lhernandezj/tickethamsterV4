@@ -111,7 +111,7 @@ struct PageView: View {
                         .cornerRadius(4)
                 }
                 .fullScreenCover(isPresented: $modal2) {
-                    Details()
+                    Details(page: page)
                 }
                 
             }
