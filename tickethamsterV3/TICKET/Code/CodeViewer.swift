@@ -11,13 +11,17 @@ struct CodeViewer: View {
 
     @Environment(\.presentationMode) var presentationMode
 
-    // ✅ LIVE pages (se actualiza si el listener cambia)
     @Binding var pages: [Page]
 
-    @State private var codeIndex: Int
+    // ✅ Guardamos el índice inicial “real”
+    private let initialIndex: Int
+
+    // ✅ Índice actual del TabView
+    @State private var codeIndex: Int = 0
 
     init(pages: Binding<[Page]>, initialIndex: Int = 0) {
         self._pages = pages
+        self.initialIndex = initialIndex
         _codeIndex = State(initialValue: initialIndex)
     }
 
@@ -25,6 +29,7 @@ struct CodeViewer: View {
 
         ZStack {
 
+            // ✅ FOOTER (como antes: NO empuja el layout)
             Rectangle()
                 .frame(width: 440, height: 100)
                 .padding(.top, 840)
@@ -38,42 +43,27 @@ struct CodeViewer: View {
                         CodeView(page: page)
                             .padding(.bottom, 30)
 
-                        // Bottom indicator
                         if pages.count <= 1 {
                             Text("1 de 1")
                                 .foregroundColor(.white)
                                 .padding(.bottom, 8)
                         } else {
-                            HStack(spacing: 10) {
-
-                                Button(action: goPrevious) {
-                                    Image(systemName: "chevron.left")
-                                        .foregroundColor(.white)
-                                        .font(.system(size: 20))
-                                }
-                                .buttonStyle(.plain)
-
-                                Text("\(safeDisplayIndex) de \(pages.count)")
-                                    .foregroundColor(.white)
-
-                                Button(action: goNext) {
-                                    Image(systemName: "chevron.right")
-                                        .foregroundColor(.white)
-                                        .font(.system(size: 20))
-                                }
-                                .buttonStyle(.plain)
-                            }
-                            .padding(.bottom, 8)
+                            Text("\(safeDisplayIndex) de \(pages.count)")
+                                .foregroundColor(.white)
+                                .padding(.bottom, 8)
                         }
                     }
-                    .tag(index) // ✅ tag = index
+                    .tag(index)
                 }
             }
-            .animation(.easeInOut, value: codeIndex)
+            // ✅ Esto ayuda cuando SwiftUI reusa la vista: “resetea” el TabView si cambia el índice inicial
+            .id(initialIndex)
             .tabViewStyle(.page(indexDisplayMode: .never))
+            .animation(.easeInOut, value: codeIndex)
+            .gesture(DragGesture()) // 🔒 bloquea swipe
         }
 
-        // HEAD
+        // 🔺 HEAD
         .overlay {
             ZStack {
 
@@ -116,12 +106,12 @@ struct CodeViewer: View {
         }
         .frame(maxHeight: .infinity, alignment: .top)
         .onAppear {
-            print("✅ CodeViewer pages.count =", pages.count)
+            syncToInitialIndex()
+            print("✅ CodeViewer pages.count =", pages.count, "initialIndex =", initialIndex, "codeIndex =", codeIndex)
         }
         .onChange(of: pages.count) { _ in
-            // ✅ si cambia el número de tickets, mantenemos el índice válido
-            clampIndex()
-            print("✅ CodeViewer updated pages.count =", pages.count)
+            // cuando llegan datos del listener, re-sincroniza el index
+            syncToInitialIndex()
         }
     }
 
@@ -138,35 +128,18 @@ struct CodeViewer: View {
         return pages[safeIndex]
     }
 
-    private func clampIndex() {
-        if pages.isEmpty {
+    private func syncToInitialIndex() {
+        guard !pages.isEmpty else {
             codeIndex = 0
-        } else {
-            codeIndex = min(max(codeIndex, 0), pages.count - 1)
+            return
         }
-    }
-
-    private func goNext() {
-        guard pages.count > 1 else { return }
-        if codeIndex < pages.count - 1 {
-            codeIndex += 1
-        } else {
-            codeIndex = 0
-        }
-    }
-
-    private func goPrevious() {
-        guard pages.count > 1 else { return }
-        if codeIndex > 0 {
-            codeIndex -= 1
-        } else {
-            codeIndex = pages.count - 1
-        }
+        let clamped = min(max(initialIndex, 0), pages.count - 1)
+        codeIndex = clamped
     }
 }
 
+
 #Preview {
-    // Preview con state local
     StatefulPreviewWrapper(Page.samplePages) { pages in
         CodeViewer(pages: pages, initialIndex: 0)
     }

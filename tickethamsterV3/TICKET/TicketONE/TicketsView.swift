@@ -12,9 +12,8 @@ struct TicketsView: View {
     @State private var modal3 = false
     @State private var pageIndex = 0
 
-    // ✅ Para abrir CodeViewer
-    @State private var showCodeViewer = false
-    @State private var selectedIndex: Int = 0
+    // ✅ AHORA ES OPTIONAL (clave)
+    @State private var selectedIndex: Int? = nil
 
     private let dotAppearance = UIPageControl.appearance()
 
@@ -27,8 +26,12 @@ struct TicketsView: View {
 
             transferButton
         }
-        .fullScreenCover(isPresented: $showCodeViewer) {
-            CodeViewer(pages: $ticketsVM.pages, initialIndex: selectedIndex)
+        // ✅ fullScreenCover(item:)
+        .fullScreenCover(item: $selectedIndex) { index in
+            CodeViewer(
+                pages: $ticketsVM.pages,
+                initialIndex: index
+            )
         }
         .overlay { headerView }
         .frame(maxHeight: .infinity, alignment: .top)
@@ -63,10 +66,13 @@ struct TicketsView: View {
             ForEach(Array(ticketsVM.pages.enumerated()), id: \.element.id) { index, page in
                 VStack {
                     Spacer()
-                    PageView(page: page, onOpenCode: {
-                        selectedIndex = index
-                        showCodeViewer = true
-                    })
+                    PageView(
+                        page: page,
+                        onOpenCode: {
+                            // ✅ SOLO ESTO
+                            selectedIndex = index
+                        }
+                    )
                     .padding(.bottom, 30)
                 }
                 .tag(index)
@@ -125,6 +131,11 @@ struct TicketsView: View {
             .frame(maxHeight: .infinity, alignment: .top)
         }
     }
+}
+
+// ✅ NECESARIO para fullScreenCover(item:)
+extension Int: Identifiable {
+    public var id: Int { self }
 }
 
 #Preview {
