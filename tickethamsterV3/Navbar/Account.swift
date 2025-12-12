@@ -40,11 +40,11 @@ struct Account: View {
                                 .bold()
                                 .font(.system(size: 22))
                                 .foregroundStyle(.white)
-                            Text("eduardowolffelagmail.com")
+                            Text(verbatim: "eduardowolffel@gmail.com")
                                 .font(.system(size: 14))
                                 .padding(.top, -6)
-                                .foregroundStyle(.white)
-                                .opacity(0.5)
+                                .foregroundColor(.white)
+                                .opacity(0.7)
                             
                         }
                         .padding(.top, 80)
