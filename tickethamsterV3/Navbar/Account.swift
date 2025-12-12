@@ -30,7 +30,8 @@ struct Account: View {
                     ZStack(){
                         
                         Rectangle()
-                            .frame(width: 500, height: 180)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 180)
                             .foregroundColor(Color("nHead"))
                         
                         VStack(alignment: .leading){
@@ -241,7 +242,7 @@ struct Account: View {
                         .fontWeight(.bold)
                         .foregroundStyle(Color.white)
                         .padding(.top, 70)
-   
+  
                 }
                 .padding(.bottom, 850)
                 //ENDS HEAD
