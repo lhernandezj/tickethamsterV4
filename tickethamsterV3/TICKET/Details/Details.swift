@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Details: View {
     
-    //ESTO CIERRA EL MODAL
+    // CIERRA EL MODAL
     @Environment(\.presentationMode) var presentationMode
     
     let page: Page
@@ -18,100 +18,143 @@ struct Details: View {
         
         ZStack {
             List {
-                VStack(alignment: .leading){
-                    Text("Seat Location").bold()
-                    Text(page.seatDetail) // ✅ SeatDetail
+                
+                VStack(alignment: .leading) {
+                    Text("Seat Location")
+                        .bold()
+                    
+                    Text(page.seatDetail)
                         .font(.system(size: 15))
                         .padding(.vertical, 0.5)
                         .opacity(0.5)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(.vertical, 10)
                 
-                VStack(alignment: .leading){
-                    Text(page.tx6).bold() // ✅ Name
-                    Text(page.tx7)        // ✅ Date
+                VStack(alignment: .leading) {
+                    Text(page.tx6)
+                        .bold()
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Text(page.tx7)
                         .font(.system(size: 13.5))
                         .padding(.vertical, 0.5)
                         .opacity(0.5)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(.vertical, 10)
                 
-                VStack(alignment: .leading){
-                    Text("Entry Info").bold()
+                VStack(alignment: .leading) {
+                    Text("Entry Info")
+                        .bold()
+                    
                     Text("Boleto Digital")
                         .font(.system(size: 15))
                         .padding(.vertical, 0.5)
                         .opacity(0.5)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(.vertical, 10)
                 
-                VStack(alignment: .leading){
-                    Text("Barcode Number").bold()
-                    Text(page.barcodeNumber) // ✅ BarcodeNumber
+                VStack(alignment: .leading) {
+                    Text("Barcode Number")
+                        .bold()
+                    
+                    Text(page.barcodeNumber)
                         .font(.system(size: 15))
                         .padding(.vertical, 0.5)
                         .opacity(0.5)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(.vertical, 10)
                 
-                VStack(alignment: .leading){
-                    Text(page.place).bold()   // ✅ Place
-                    Text(page.city)           // ✅ City
+                VStack(alignment: .leading) {
+                    Text(page.place)
+                        .bold()
+                    
+                    Text(page.city)
                         .font(.system(size: 15))
                         .padding(.vertical, 0.5)
                         .opacity(0.5)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(.vertical, 10)
                 
-                VStack(alignment: .leading){
-                    Text("Order Number").bold()
-                    // Si luego quieres otro campo para order number real, lo agregamos.
+                VStack(alignment: .leading) {
+                    Text("Order Number")
+                        .bold()
+                    
                     Text(page.purchase)
                         .font(.system(size: 15))
                         .padding(.vertical, 0.1)
                         .opacity(0.5)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(.vertical, 10)
                 
-                VStack(alignment: .leading){
-                    Text("Ticket Type").bold()
-                    Text(page.tx1) // ✅ Type
-                        .font(.system(size: 15))
-                        .padding(.vertical, 0.1)
-                        .opacity(0.5)
-                }
-                .padding(.vertical, 10)
-                
-                VStack(alignment: .leading){
-                    Text("Entrance").bold()
-                    Text(page.acceso) // ✅ Acceso
-                        .font(.system(size: 15))
-                        .padding(.vertical, 0.1)
-                        .opacity(0.5)
-                }
-                .padding(.vertical, 10)
-                
-                VStack(alignment: .leading){
-                    Text("Purchase Date").bold()
-                    Text(page.purchase) // ✅ Purchase
-                        .font(.system(size: 15))
-                        .padding(.vertical, 0.1)
-                        .opacity(0.5)
-                }
-                .padding(.vertical, 10)
-                
-                VStack(alignment: .leading){
-                    Text("Ticket Price").bold()
+                VStack(alignment: .leading) {
+                    Text("Ticket Type")
+                        .bold()
                     
-                    Text(priceLine(label: "Ticket Face Value", value: page.price)) // ✅
+                    Text(page.tx1)
                         .font(.system(size: 15))
                         .padding(.vertical, 0.1)
                         .opacity(0.5)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.vertical, 10)
+                
+                VStack(alignment: .leading) {
+                    Text("Entrance")
+                        .bold()
                     
-                    Text(priceLine(label: "GRAND TOTAL", value: page.price)) // ✅
+                    Text(page.acceso)
                         .font(.system(size: 15))
                         .padding(.vertical, 0.1)
                         .opacity(0.5)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.vertical, 10)
+                
+                VStack(alignment: .leading) {
+                    Text("Purchase Date")
+                        .bold()
+                    
+                    Text(page.purchase)
+                        .font(.system(size: 15))
+                        .padding(.vertical, 0.1)
+                        .opacity(0.5)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.vertical, 10)
+                
+                VStack(alignment: .leading) {
+                    Text("Ticket Price")
+                        .bold()
+                    
+                    Text(priceLine(label: "Ticket Face Value", value: page.price))
+                        .font(.system(size: 15))
+                        .padding(.vertical, 0.1)
+                        .opacity(0.5)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Text(priceLine(label: "GRAND TOTAL", value: page.price))
+                        .font(.system(size: 15))
+                        .padding(.vertical, 0.1)
+                        .opacity(0.5)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(.vertical, 10)
             }
@@ -119,10 +162,12 @@ struct Details: View {
             .scrollContentBackground(.hidden)
         }
         
-        //STARTS HEAD
+        // HEADER
         .overlay {
-            ZStack{
-                Button(action: { presentationMode.wrappedValue.dismiss() }) {
+            ZStack {
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }) {
                     Color("nHead")
                         .frame(width: 600, height: 105)
                         .background(.ultraThinMaterial)
@@ -131,27 +176,24 @@ struct Details: View {
                 }
                 .frame(maxHeight: .infinity, alignment: .top)
                 
-                ZStack{
+                ZStack {
                     Image(systemName: "multiply")
                         .foregroundColor(.white)
                         .font(.system(size: 20))
                         .padding(.trailing, 350)
-                     
+                    
                     Text("Ticket Details")
-                        .fontWeight(.medium)
-                        .bold()
                         .font(.custom("Lexend", size: 18))
+                        .fontWeight(.medium)
                         .foregroundColor(.white)
                 }
                 .frame(maxHeight: .infinity, alignment: .top)
             }
         }
         .frame(maxHeight: .infinity, alignment: .top)
-        //ENDS HEAD
     }
     
     private func priceLine(label: String, value: String) -> String {
-        // Ajusta estos espacios a tu gusto para que se parezca a tu formato
         let spaces = String(repeating: " ", count: max(1, 55 - label.count))
         return "\(label)\(spaces)\(value)"
     }
